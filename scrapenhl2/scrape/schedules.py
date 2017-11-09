@@ -278,7 +278,7 @@ def schedule_setup():
     _SCHEDULES = {season: _get_season_schedule(season) for season in range(2005, _CURRENT_SEASON + 1)}
 
 
-def generate_season_schedule_file(season, force_overwrite=True):
+def generate_season_schedule_file(season, force_overwrite=True, filters={}):
     """
     Reads season schedule from NHL API and writes to file.
 
@@ -307,9 +307,10 @@ def generate_season_schedule_file(season, force_overwrite=True):
 
     :return: Nothing
     """
+    #import ipdb; ipdb.set_trace()
     page = helpers.try_url_n_times(get_season_schedule_url(season))
 
-    page2 = json.loads(page.decode('latin-1'))
+    page2 = json.loads(page)
     df = _create_schedule_dataframe_from_json(page2)
     df.loc[:, 'Season'] = season
 
@@ -337,7 +338,8 @@ def _create_schedule_dataframe_from_json(jsondict):
     venues = []
     for datejson in jsondict['dates']:
         try:
-            date = helpers.try_to_access_dict(datejson, 'date')
+            date = datejson.get('date', None)
+            print(date)
             for gamejson in datejson['games']:
                 game = int(str(helpers.try_to_access_dict(gamejson, 'gamePk'))[-5:])
                 gametype = helpers.try_to_access_dict(gamejson, 'gameType')

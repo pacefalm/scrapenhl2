@@ -5,6 +5,7 @@ This module contains methods for automatically scraping and parsing games.
 import os
 import os.path
 import requests
+from tqdm import tqdm
 
 import scrapenhl2.scrape.manipulate_schedules as manipulate_schedules
 import scrapenhl2.scrape.parse_pbp as parse_pbp
@@ -101,7 +102,8 @@ def read_final_games(games, season):
 
     :return:
     """
-    for game in games:
+    for game in tqdm(games, desc="Parsing Games"):
+        #import ipdb; ipdb.set_trace()
         try:
             scrape_pbp.scrape_game_pbp(season, game, True)
             manipulate_schedules.update_schedule_with_pbp_scrape(season, game)
@@ -131,10 +133,10 @@ def read_final_games(games, season):
                     print('Not enough rows in json for {0:d} {1:d}; reading from html'.format(int(season), int(game)))
                     scrape_toi.scrape_game_toi_from_html(season, game, True)
                     parse_toi.parse_game_toi_from_html(season, game, True)
-        except requests.exceptions.HTTPError as he:
-            print('Could not access toi url for {0:d} {1:d}'.format(season, game))
-            print(str(he))
-        except requests.exceptions.URLError as ue:
+        except (
+                requests.exceptions.ReadTimeout,
+                requests.exceptions.HTTPError,
+                ) as ue:
             print('Could not access toi url for {0:d} {1:d}'.format(season, game))
             print(str(ue))
         except Exception as e:

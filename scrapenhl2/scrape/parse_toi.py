@@ -124,6 +124,7 @@ def save_parsed_toi(toi, season, game):
 
     :return: nothing
     """
+    print("Saving")
     toi.to_hdf(get_game_parsed_toi_filename(season, game),
                key='T{0:d}0{1:d}'.format(season, game),
                mode='w', complib='zlib')

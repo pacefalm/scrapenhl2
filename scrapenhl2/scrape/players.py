@@ -5,6 +5,7 @@ This module contains methods related to individual player info.
 import functools
 import json
 import os.path
+from tqdm import tqdm
 
 import feather
 import pandas as pd
@@ -186,7 +187,7 @@ def update_player_ids_file(playerids, force_overwrite=False):
         current_players = current_players.query('_merge == "left_only"').drop('_merge', axis=1)
     if len(to_scrape) == 0:
         return
-    for playerid in to_scrape:
+    for playerid in tqdm(to_scrape, desc="Parsing players in play by play"):
         playerinfo = get_player_info_from_url(playerid)
         ids.append(playerinfo['ID'])
         names.append(playerinfo['Name'])
@@ -394,7 +395,7 @@ def get_player_info_from_url(playerid):
 
     :return: dict with player ID, name, handedness, position, etc
     """
-    page = helpers.try_url_n_times(get_player_url(playerid)).decode('latin-1')
+    page = helpers.try_url_n_times(get_player_url(playerid), debug=True)
     data = json.loads(page)
 
     info = {}

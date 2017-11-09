@@ -40,7 +40,8 @@ setuptools.setup(
                       'dash-renderer',
                       'dash-html-components',
                       'dash-core-components',
-                      'requests'
+                      'requests', # Urllib for humans
+                      'tqdm' # CLI progress bar
                       ],
     long_description=read('README.rst'),
     classifiers=[
