@@ -5,7 +5,6 @@ This module contains methods related to individual player info.
 import functools
 import json
 import os.path
-import urllib.request
 
 import feather
 import pandas as pd

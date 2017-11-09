@@ -4,7 +4,6 @@ This module contains methods for scraping pbp.
 
 import json
 import os.path
-import urllib.request
 import zlib
 from time import sleep
 

@@ -6,7 +6,6 @@ import datetime
 import functools
 import json
 import os.path
-import urllib.request
 
 import feather
 import pandas as pd

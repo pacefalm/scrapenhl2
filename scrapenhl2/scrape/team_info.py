@@ -5,8 +5,6 @@ This module contains methods related to the team info files.
 import functools
 import json
 import os.path
-import urllib.error
-import urllib.request
 
 import feather
 import pandas as pd
@@ -151,7 +149,7 @@ def generate_team_ids_file(teamids=None):
             names.append(tname)
 
             # ed.print_and_log('Done with ID # {0:d}: {1:s}'.format(tid, tname))
-        except urllib.error.HTTPError:
+        except requests.exceptions.HTTPError:
             pass
         except Exception as e:
             print(e, e.args)

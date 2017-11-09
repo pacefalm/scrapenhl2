@@ -9,8 +9,7 @@ import os.path
 import pickle
 import re
 import time
-import urllib.request
-import urllib.error
+import requests
 
 import numpy as np
 import pandas as pd
@@ -349,10 +348,9 @@ def try_url_n_times(url, timeout=5, n=5):
     while tries < n:
         tries += 1
         try:
-            with urllib.request.urlopen(url, timeout=5) as reader:
-                page = reader.read()
-            break
-        except urllib.error.HTTPError as httpe:
+            resp = requests.get(url, timeout=5)
+            page = resp.text
+        except requests.HTTPError as httpe:
             if '404' in str(httpe):
                 break
             else:
