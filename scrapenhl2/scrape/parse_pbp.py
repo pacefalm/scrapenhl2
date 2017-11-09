@@ -7,12 +7,14 @@ import os.path
 import numpy as np
 import pandas as pd
 
-import scrapenhl2.scrape.general_helpers as helpers
-import scrapenhl2.scrape.manipulate_schedules as manipulate_schedules
-import scrapenhl2.scrape.organization as organization
-import scrapenhl2.scrape.players as players
-import scrapenhl2.scrape.schedules as schedules
-import scrapenhl2.scrape.scrape_pbp as scrape_pbp
+from scrapenhl2.scrape.organization import Organization
+from scrapenhl2.scrape import general_helpers as helpers
+from scrapenhl2.scrape import manipulate_schedules
+from scrapenhl2.scrape import players
+from scrapenhl2.scrape import schedules
+from scrapenhl2.scrape import scrape_pbp
+
+organization = Organization()
 
 
 def parse_season_pbp(season, force_overwrite=False):

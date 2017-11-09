@@ -3,10 +3,11 @@ This module contains methods related to scraping games.
 """
 import os.path
 
-import scrapenhl2.scrape.organization as organization
-import scrapenhl2.scrape.schedules as schedules
-import scrapenhl2.scrape.team_info as team_info
+from scrapenhl2.scrape.organization import Organization
+from scrapenhl2.scrape import schedules
+from scrapenhl2.scrape import team_info
 
+organization = Organization()
 
 def most_recent_game_id(team1, team2):
     """

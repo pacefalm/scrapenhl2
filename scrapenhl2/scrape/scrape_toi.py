@@ -8,7 +8,7 @@ import urllib.request
 import zlib
 from time import sleep
 
-from scrapenhl2.scrape import organization
+from scrapenhl2.scrape.organization import Organization
 from scrapenhl2.scrape import schedules
 from scrapenhl2.scrape import general_helpers as helpers
 
@@ -112,6 +112,7 @@ def save_raw_toi_from_html(page, season, game, homeroad):
 
     :return: nothing
     """
+    import ipdb; ipdb.set_trace()
     if homeroad == 'H':
         filename = get_home_shiftlog_filename(season, game)
     elif homeroad == 'R':
@@ -208,8 +209,10 @@ def scrape_toi_setup():
 
     :return:
     """
+    import ipdb; ipdb.set_trace()
     for season in range(2005, schedules.get_current_season() + 1):
         organization.check_create_folder(organization.get_season_raw_pbp_folder(season))
 
 
+organization = Organization()
 scrape_toi_setup()

@@ -11,10 +11,11 @@ import urllib.request
 import feather
 import pandas as pd
 
-import scrapenhl2.scrape.general_helpers as helpers
-import scrapenhl2.scrape.organization as organization
-import scrapenhl2.scrape.team_info as team_info
+from scrapenhl2.scrape.organization import Organization
+from scrapenhl2.scrape import general_helpers as helpers
+from scrapenhl2.scrape import team_info
 
+organization = Organization()
 
 def _get_current_season():
     """

@@ -7,7 +7,10 @@ import feather
 import pandas as pd
 
 from scrapenhl2.scrape import general_helpers as helpers
-from scrapenhl2.scrape import organization, schedules, teams, parse_pbp, parse_toi, players, events, team_info, scrape_pbp
+from scrapenhl2.scrape.organization import Organization
+from scrapenhl2.scrape import schedules, teams, parse_pbp, parse_toi, players, events, team_info, scrape_pbp
+
+organization = Organization()
 
 
 def get_player_toion_toioff_filename(season):

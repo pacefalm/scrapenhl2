@@ -8,11 +8,13 @@ import feather
 import pandas as pd
 import pyarrow
 
-import scrapenhl2.scrape.organization as organization
-import scrapenhl2.scrape.parse_pbp as parse_pbp
-import scrapenhl2.scrape.parse_toi as parse_toi
-import scrapenhl2.scrape.schedules as schedules
-import scrapenhl2.scrape.team_info as team_info
+from scrapenhl2.scrape.organization import Organization
+from scrapenhl2.scrape import parse_pbp
+from scrapenhl2.scrape import parse_toi
+from scrapenhl2.scrape import schedules
+from scrapenhl2.scrape import team_info
+
+organization = Organization()
 
 
 def get_team_pbp(season, team):

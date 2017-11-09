@@ -11,8 +11,10 @@ import urllib.request
 import feather
 import pandas as pd
 
-import scrapenhl2.scrape.general_helpers as helpers
-import scrapenhl2.scrape.organization as organization
+from scrapenhl2.scrape.organization import Organization
+from scrapenhl2.scrape import general_helpers as helpers
+
+organization = Organization()
 
 
 def get_team_info_filename():

@@ -52,6 +52,7 @@ def autoupdate(season=None):
         season = schedules.get_current_season()
 
     sch = schedules.get_season_schedule(season)
+    import ipdb; ipdb.set_trace()
 
     # First, for all games that were in progress during last scrape, delete html charts
     inprogress = sch.query('Status == "In Progress"')
