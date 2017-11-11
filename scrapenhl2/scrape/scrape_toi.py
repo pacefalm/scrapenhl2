@@ -116,7 +116,9 @@ def save_raw_toi_from_html(page, season, game, homeroad):
     elif homeroad == 'R':
         filename = get_road_shiftlog_filename(season, game)
     w = open(filename, 'w')
-    w.write(page.decode('latin-1'))
+    if type(page) != str:
+        page = page.decode('latin1')
+    w.write(page)
     w.close()
 
 

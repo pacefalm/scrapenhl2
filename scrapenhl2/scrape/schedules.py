@@ -2,7 +2,7 @@
 This module contains methods related to season schedules.
 """
 
-import datetime
+import arrow
 import functools
 import json
 import os.path
@@ -21,7 +21,7 @@ def _get_current_season():
 
     :return: int, current season
     """
-    date = datetime.datetime.now()
+    date = arrow.now()
     season = date.year - 1
     if date.month >= 9:
         season += 1
@@ -269,6 +269,7 @@ def schedule_setup():
     global _SCHEDULES, _CURRENT_SEASON
     _CURRENT_SEASON = _get_current_season()
     for season in range(2005, get_current_season() + 1):
+        print(season)
         if not os.path.exists(get_season_schedule_filename(season)):
             generate_season_schedule_file(season)  # season schedule
             # There is a potential issue here for current season.
@@ -336,7 +337,11 @@ def _create_schedule_dataframe_from_json(jsondict):
     hids = []
     hscores = []
     venues = []
+    idx = 0
     for datejson in jsondict['dates']:
+        if idx >= 5:
+            break
+        idx += 1
         try:
             date = datejson.get('date', None)
             print(date)

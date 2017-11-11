@@ -41,6 +41,7 @@ setuptools.setup(
                       'dash-html-components',
                       'dash-core-components',
                       'requests', # Urllib for humans
+                      'arrow', # Datetime for humans
                       'tqdm' # CLI progress bar
                       ],
     long_description=read('README.rst'),
