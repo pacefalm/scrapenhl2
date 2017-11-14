@@ -339,7 +339,7 @@ def _create_schedule_dataframe_from_json(jsondict):
     venues = []
     idx = 0
     for datejson in jsondict['dates']:
-        if idx >= 5:
+        if idx >= 20:
             break
         idx += 1
         try:

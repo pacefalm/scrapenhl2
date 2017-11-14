@@ -15,6 +15,8 @@ import numpy as np
 import pandas as pd
 from fuzzywuzzy import fuzz
 
+__SESSION__ = None
+
 
 def print_and_log(message, level='info', print_and_log=True):
     """
@@ -343,13 +345,18 @@ def try_url_n_times(url, timeout=5, n=5, debug=False):
     :return: bytes
     """
 
+    global __SESSION__
+    if __SESSION__ is None:
+        __SESSION__ = requests.Session()
+
+
     if debug:
         #import ipdb; ipdb.set_trace()
         pass
     page = None
     for tries in range(n):
         try:
-            resp = requests.get(url, timeout=5)
+            resp = __SESSION__.get(url, timeout=5)
             page = resp.text
             break
         except requests.HTTPError as httpe:
