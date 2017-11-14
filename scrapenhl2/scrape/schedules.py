@@ -2,7 +2,7 @@
 This module contains methods related to season schedules.
 """
 
-import datetime
+import arrow
 import functools
 import json
 import os.path
@@ -21,7 +21,7 @@ def _get_current_season():
 
     :return: int, current season
     """
-    date = datetime.datetime.now()
+    date = arrow.now()
     season = date.year - 1
     if date.month >= 9:
         season += 1
@@ -269,6 +269,7 @@ def schedule_setup():
     global _SCHEDULES, _CURRENT_SEASON
     _CURRENT_SEASON = _get_current_season()
     for season in range(2005, get_current_season() + 1):
+        print(season)
         if not os.path.exists(get_season_schedule_filename(season)):
             generate_season_schedule_file(season)  # season schedule
             # There is a potential issue here for current season.
@@ -278,7 +279,7 @@ def schedule_setup():
     _SCHEDULES = {season: _get_season_schedule(season) for season in range(2005, _CURRENT_SEASON + 1)}
 
 
-def generate_season_schedule_file(season, force_overwrite=True):
+def generate_season_schedule_file(season, force_overwrite=True, filters={}):
     """
     Reads season schedule from NHL API and writes to file.
 
@@ -307,9 +308,10 @@ def generate_season_schedule_file(season, force_overwrite=True):
 
     :return: Nothing
     """
+    #import ipdb; ipdb.set_trace()
     page = helpers.try_url_n_times(get_season_schedule_url(season))
 
-    page2 = json.loads(page.decode('latin-1'))
+    page2 = json.loads(page)
     df = _create_schedule_dataframe_from_json(page2)
     df.loc[:, 'Season'] = season
 
@@ -335,9 +337,14 @@ def _create_schedule_dataframe_from_json(jsondict):
     hids = []
     hscores = []
     venues = []
+    idx = 0
     for datejson in jsondict['dates']:
+        if idx >= 5:
+            break
+        idx += 1
         try:
-            date = helpers.try_to_access_dict(datejson, 'date')
+            date = datejson.get('date', None)
+            print(date)
             for gamejson in datejson['games']:
                 game = int(str(helpers.try_to_access_dict(gamejson, 'gamePk'))[-5:])
                 gametype = helpers.try_to_access_dict(gamejson, 'gameType')

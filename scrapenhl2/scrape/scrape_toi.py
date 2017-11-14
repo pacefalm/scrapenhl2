@@ -93,7 +93,7 @@ def save_raw_toi(page, season, game):
 
     :return: nothing
     """
-    page2 = zlib.compress(page, level=9)
+    page2 = zlib.compress(page.encode('latin-1'), level=9)
     filename = get_game_raw_toi_filename(season, game)
     w = open(filename, 'wb')
     w.write(page2)
@@ -116,7 +116,9 @@ def save_raw_toi_from_html(page, season, game, homeroad):
     elif homeroad == 'R':
         filename = get_road_shiftlog_filename(season, game)
     w = open(filename, 'w')
-    w.write(page.decode('latin-1'))
+    if type(page) != str:
+        page = page.decode('latin1')
+    w.write(page)
     w.close()
 
 
@@ -148,9 +150,10 @@ def get_raw_toi(season, game):
 
     :return: dict, the json shifts
     """
+    #import ipdb; ipdb.set_trace()
     with open(get_game_raw_toi_filename(season, game), 'rb') as reader:
         page = reader.read()
-    return json.loads(str(zlib.decompress(page).decode('latin-1')))
+    return json.loads(str(zlib.decompress(page).decode("latin-1")))
 
 
 def get_home_shiftlog_url(season, game):

@@ -35,12 +35,14 @@ setuptools.setup(
                       'beautifulsoup4==4.5.3',  # for html parsing
                       'html-table-extractor',  # for html parsing
                       'plotly',  # for interactive charts
-                      'tables',
+                      #'tables',
                       'dash',
                       'dash-renderer',
                       'dash-html-components',
                       'dash-core-components',
-                      'requests'
+                      'requests',  # Urllib for humans
+                      'arrow',  # Datetime for humans
+                      'tqdm'  # CLI progress bar
                       ],
     long_description=read('README.rst'),
     classifiers=[
